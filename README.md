@@ -16,15 +16,15 @@ Next, let's consider a simple counter application. We'll create an observable st
 import { observable, action } from 'mobx';
 
 class CounterStore {
-  @observable counter = 0;
+  counter = observable.box(0);
 
-  @action increment() {
-    this.counter++;
-  }
+  increment = action(() => {
+    this.counter.set(this.counter.get() + 1);
+  });
 
-  @action decrement() {
-    this.counter--;
-  }
+  decrement = action(() => {
+    this.counter.set(this.counter.get() - 1);
+  });
 }
 
 const counterStore = new CounterStore();
@@ -58,3 +58,6 @@ In the code above, we import the `observer` function from `mobx-react`. By wrapp
 With this setup, whenever the user clicks the increment or decrement buttons, MobX will automatically update the `counter` value in the store and trigger a re-render of the `Counter` component, reflecting the updated value on the screen.
 
 This is just a basic example, but MobX can handle more complex scenarios with multiple stores and dependencies between them. It provides additional features like computed values, reactions, and middleware for advanced state management.
+
+
+
